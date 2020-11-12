@@ -15,3 +15,6 @@
 *.ilk
 *.sln
 *.suo
+*.db-shm
+*.db-wal
+*.opendb
