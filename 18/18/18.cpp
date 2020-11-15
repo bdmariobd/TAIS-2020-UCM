@@ -13,7 +13,8 @@
 class sumidero {
 private:
     std::vector<std::vector<bool>> g;
-    std::vector<bool>visit;
+    std::vector<bool> candidatos;
+
     bool sumid;
     int vertice;
     void leeGrafo(int m) {
@@ -23,16 +24,56 @@ private:
             g[a][b] = true;
         }
     }
-    void dfs(int origen) {
-        
-    }
 public:
     
-    sumidero(int n, int m) :g(n), visit(n),sumid(false){
+    sumidero(int n, int m) :g(n,std::vector<bool>(m)), candidatos(n,true),sumid(false){
+        if (n == 1) {
+            sumid = true;
+            vertice = 0;
+            return;
+        }
         leeGrafo(m);
-        for (int i = 0; !sumid&&i < n ; ++i) { //coste o(v)
-            if () {//si su grado de salida es 0
+        int candidato = 0;
+        int tachados = 0;
+        bool posibleSum = false;
+        while (!posibleSum && tachados < n) {
+            int gEntrada = 0;
+            bool aborta = false;
+ 
+            for (int i = 0; i < n && !aborta; ++i) {
                 
+                if (i != candidato) {
+                    if (g[i][candidato]) {
+                        ++gEntrada;
+                        if (candidatos[i]) {
+                            candidatos[i] = false;
+                            ++tachados;
+                            
+                        }
+                    }
+                    else {
+                        candidatos[candidato] = false;
+                        ++tachados;
+                        candidato = i;
+                        aborta = true;
+                    }
+                } 
+
+            }
+            if (gEntrada == n - 1) posibleSum = true;
+
+        }
+
+        //comprobamos si el unico candidato tiene grado de salida =0
+        if (posibleSum) {
+            bool gSalida = false;
+            for (int i = 0; !gSalida && i < n; ++i) {
+                if (g[candidato][i]) gSalida = true;
+            }
+
+            if (!gSalida) {
+                sumid = true;
+                vertice = candidato;
             }
         }
     }
