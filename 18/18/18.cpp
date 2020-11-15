@@ -26,56 +26,28 @@ private:
     }
 public:
     
-    sumidero(int n, int m) :g(n,std::vector<bool>(m)), candidatos(n,true),sumid(false){
+    sumidero(int n, int m) :g(n,std::vector<bool>(n)), candidatos(n,true),sumid(true){ //el coste es de 2v -> v
         if (n == 1) {
             sumid = true;
             vertice = 0;
             return;
         }
         leeGrafo(m);
-        int candidato = 0;
-        int tachados = 0;
+
         bool posibleSum = false;
-        while (!posibleSum && tachados < n) {
-            int gEntrada = 0;
-            bool aborta = false;
+        int candidato = 0;
+        for (int v = 1; v < n; ++v)
+            if (g[candidato][v]) candidato = v; //descarto a candidato si tiene aristas de salida
+
+        vertice = candidato;
+        //comprobamos si el unico candidato tiene grado de salida =0 y grado de entrada = n-1
+        for (int i = 0;sumid && i < n; ++i) {
+            if (candidato != i) {
+                if (g[candidato][i]) sumid = false;//el candidato tiene aristas de salida
+                if (!g[i][candidato]) sumid = false; //una arista no le apunta, no es sumidero (gEntrada<n-1)
+            }
+        }
  
-            for (int i = 0; i < n && !aborta; ++i) {
-                
-                if (i != candidato) {
-                    if (g[i][candidato]) {
-                        ++gEntrada;
-                        if (candidatos[i]) {
-                            candidatos[i] = false;
-                            ++tachados;
-                            
-                        }
-                    }
-                    else {
-                        candidatos[candidato] = false;
-                        ++tachados;
-                        candidato = i;
-                        aborta = true;
-                    }
-                } 
-
-            }
-            if (gEntrada == n - 1) posibleSum = true;
-
-        }
-
-        //comprobamos si el unico candidato tiene grado de salida =0
-        if (posibleSum) {
-            bool gSalida = false;
-            for (int i = 0; !gSalida && i < n; ++i) {
-                if (g[candidato][i]) gSalida = true;
-            }
-
-            if (!gSalida) {
-                sumid = true;
-                vertice = candidato;
-            }
-        }
     }
     void escribeSol() {
         if (sumid) std::cout << "SI " << vertice;
