@@ -39,7 +39,7 @@ private:
             pq.update(w, dist[w]); //se comporta como push si no estaba. mete el vector a la cola a visitar, cambiando su prioridad si fuese necesario
         }
 
-        else if (dist[w].first == dist[v].first + a.valor()) {
+        else if (dist[w].first == dist[v].first + a.valor() && dist[w].second > dist[v].second + 1) {
             dist[w].second = dist[v].second + 1; //guarda el numero de vertices al camino de menor coste
             pq.update(w, dist[w]);
         }
