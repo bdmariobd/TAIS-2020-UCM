@@ -56,11 +56,16 @@ bool resuelveCaso() {
        std::vector<int> veces_sector(s+1,0);
        int j = valor, i =s;
        while (j > 0) {
-           if (sector[i] <= j) { //se ha usado el sector i
+           /*if (sector[i] <= j) { //se ha usado el sector i
                j -= sector[i];
                ++veces_sector[i];
            }
-           else --i; //no se ha usado el sector i, prueba con el anterior
+           else --i; //no se ha usado el sector i, prueba con el anterior*/
+           if (j>= sector[i] && tiradas[i][j] == tiradas[i][j - sector[i]] + 1) {
+               j -= sector[i];
+               ++veces_sector[i];
+           }
+           else --i;
        }
 
        for (int i = s; i > 0; --i) {
