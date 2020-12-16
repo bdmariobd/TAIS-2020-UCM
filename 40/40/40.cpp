@@ -1,5 +1,4 @@
-
-// Nombre y Apellidos
+// Nombre y Apellidos Mario Blanco Dominguez
 
 // Comentario general sobre la solución,
 // explicando cómo se resuelve el problema
@@ -11,13 +10,10 @@
 
 /*
     palindromo(i,j) devuelve el menor nº de letras posible a añadir a la palabra desde la casilla i a la j
-
     caso base
     i=j -> palindromo(i,j) =0
     caso recursivo
-
     palabra[i]=palabra[j] -> palindromo(i,j) = palindromo(i+1,j-1)
-
     palabra[i]!=palabra[j] -> palindromo(i,j) = min (palidromo(i, j-1)+1 , palindromo(i+1, j)+1  )
 */
 void reconstruir(const std::string& palabra, int i, int j, const Matriz<int>& mtx, std::string&sol) {
@@ -47,7 +43,7 @@ void reconstruir(const std::string& palabra, int i, int j, const Matriz<int>& mt
 int palindromo(const std::string& palabra, int i, int j, Matriz<int>& mtx) {
     if (mtx[i][j] != -1) return mtx[i][j];
     else {
-        if (i == j) mtx[i][j] = 0;
+        if (i >= j) mtx[i][j] = 0;
         else {
             if (palabra[i] == palabra[j]) mtx[i][j] = palindromo(palabra, i + 1, j - 1, mtx);
             else mtx[i][j] = std::min(palindromo(palabra, i, j - 1,mtx) + 1, palindromo(palabra, i + 1, j,mtx) + 1);
