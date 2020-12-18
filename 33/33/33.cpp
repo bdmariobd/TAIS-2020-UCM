@@ -1,5 +1,5 @@
 
-// Nombre y Apellidos Mario Blanco
+// Nombre y Apellidos Mario Blancoo
 
 // Comentario general sobre la solución,
 // explicando cómo se resuelve el problema
